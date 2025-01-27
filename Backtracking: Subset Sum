@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void findSubsetSum(int idx, int target, vector<int>& nums, vector<int>& currentSubset) {
+    if (target == 0) {
+        for (int num : currentSubset) {
+            cout << num << " ";
+        }
+        cout << endl;
+        return;
+    }
+
+    for (int i = idx; i < nums.size(); i++) {
+        if (nums[i] > target) continue;
+        currentSubset.push_back(nums[i]);
+        findSubsetSum(i + 1, target - nums[i], nums, currentSubset);
+        currentSubset.pop_back(); // Backtrack
+    }
+}
+
+int main() {
+    vector<int> nums = {1, 2, 3, 4, 5};
+    int target = 5;
+    vector<int> currentSubset;
+    findSubsetSum(0, target, nums, currentSubset);
+}
