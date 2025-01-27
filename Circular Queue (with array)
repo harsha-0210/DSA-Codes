@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+class CircularQueue {
+private:
+    int *arr;
+    int front, rear, size;
+
+public:
+    CircularQueue(int s) {
+        size = s;
+        arr = new int[size];
+        front = rear = -1;
+    }
+
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    bool isFull() {
+        return (rear + 1) % size == front;
+    }
+
+    void enqueue(int val) {
+        if (isFull()) {
+            cout << "Queue is full!" << endl;
+            return;
+        }
+        if (front == -1) front = 0;
+        rear = (rear + 1) % size;
+        arr[rear] = val;
+        cout << "Enqueued: " << val << endl;
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        cout << "Dequeued: " << arr[front] << endl;
+        if (front == rear) {
+            front = rear = -1;
+        } else {
+            front = (front + 1) % size;
+        }
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        int i = front;
+        while (i != rear) {
+            cout << arr[i] << " ";
+            i = (i + 1) % size;
+        }
+        cout << arr[rear] << endl;
+    }
+};
+
+int main() {
+    CircularQueue q(5);
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display();
+    q.dequeue();
+    q.display();
+    q.enqueue(40);
+    q.enqueue(50);
+    q.enqueue(60);
+    q.display();
+}
