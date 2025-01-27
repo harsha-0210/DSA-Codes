@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Patient {
+public:
+    string name;
+    int age;
+    string gender;
+    string diagnosis;
+    string treatment;
+
+    Patient(string n, int a, string g, string d, string t)
+        : name(n), age(a), gender(g), diagnosis(d), treatment(t) {}
+};
+
+class MedicalRecordSystem {
+private:
+    vector<Patient> patients;
+
+public:
+    void addPatient(const string& name, int age, const string& gender, const string& diagnosis, const string& treatment) {
+        patients.push_back(Patient(name, age, gender, diagnosis, treatment));
+        cout << "Patient record added for " << name << endl;
+    }
+
+    void displayRecords() {
+        cout << "Patient Medical Records:\n";
+        for (const auto& patient : patients) {
+            cout << "Name: " << patient.name << ", Age: " << patient.age
+                 << ", Gender: " << patient.gender << ", Diagnosis: " << patient.diagnosis
+                 << ", Treatment: " << patient.treatment << endl;
+        }
+    }
+
+    void searchPatient(const string& name) {
+        bool found = false;
+        for (const auto& patient : patients) {
+            if (patient.name == name) {
+                cout << "Patient Found: \n";
+                cout << "Name: " << patient.name << ", Age: " << patient.age
+                     << ", Gender: " << patient.gender << ", Diagnosis: " << patient.diagnosis
+                     << ", Treatment: " << patient.treatment << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Patient not found!\n";
+        }
+    }
+};
+
+int main() {
+    MedicalRecordSystem system;
+
+    system.addPatient("John Doe", 30, "Male", "Flu", "Rest and hydration");
+    system.addPatient("Jane Smith", 45, "Female", "Asthma", "Inhalers and medication");
+    system.addPatient("Alice Johnson", 29, "Female", "Migraine", "Pain relief medication");
+
+    system.displayRecords();
+
+    system.searchPatient("John Doe");
+    system.searchPatient("Michael Jordan");
+
+    return 0;
+}
